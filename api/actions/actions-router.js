@@ -5,17 +5,12 @@ const Actions= require('./actions-model');
 
 const { validateActionId, validateAction } = require('./actions-middlware');
 
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
     Actions.get()
     .then(list => {
         res.status(200).json(list)
     })
-    .catch(err => {
-        res.status(500).json({
-            message: 'could not access actions',
-            err: err.message
-        })
-    })
+    .catch(next)
 })
 
 router.get('/:id', validateActionId, async (req, res) => {
@@ -24,43 +19,28 @@ router.get('/:id', validateActionId, async (req, res) => {
     res.status(200).json(req.action)
 })
 
-router.post('/', validateAction, (req, res) => {
+router.post('/', validateAction, (req, res, next) => {
     Actions.insert(req.body)
     .then(newAction => {
         res.status(201).json(newAction)
     })
-    .catch(err => {
-        res.status(500).json({
-            message: 'could not access actions',
-            err: err.message
-        })
-    })
+    .catch(next)
 })
 
-router.put('/:id', validateActionId, validateAction, (req, res) => {
+router.put('/:id', validateActionId, validateAction, (req, res, next) => {
     Actions.update(req.params.id, req.body)
     .then(updateAction => {
         res.status(200).json(updateAction);
     })
-    .catch(err => {
-        res.status(500).json({
-            message: 'could not access actions',
-            err: err.message
-        })
-    })
+    .catch(next)
 })
 
-router.delete('/:id', validateActionId, (req, res) => {
+router.delete('/:id', validateActionId, (req, res, next) => {
     Actions.remove(req.params.id)
     .then(deleted => {
         res.json(deleted)
     })
-    .catch(err => {
-        res.status(500).json({
-            message: 'could delete action',
-            err: err.message
-        })
-    })
+    .catch(next)
 })
 
 

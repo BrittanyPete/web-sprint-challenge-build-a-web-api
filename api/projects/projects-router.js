@@ -1,8 +1,5 @@
-// Write your "projects" router here!
 const router = require('express').Router();
 const Projects = require('./projects-model');
-
-// const router = express.Router();
 
 const { validateId, validate } = require('./projects-middleware');
 
@@ -47,7 +44,7 @@ router.delete('/:id', validateId, async (req, res, next) => {
     .catch(next)
 })
 
-router.get('/:id/actions', validateId, async (req, res, next) => {
+router.get('/:id/actions', validateId, async (req, res) => {
     await Projects.get(req.params.id)
     const actions = await Projects.getProjectActions(req.params.id);
     res.status(200).json(actions);

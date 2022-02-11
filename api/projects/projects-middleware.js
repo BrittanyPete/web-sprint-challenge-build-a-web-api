@@ -1,19 +1,9 @@
-// add middlewares here related to projects
 const Projects = require('./projects-model');
 
 module.exports = {
-    logger,
     validateId,
     validate,
-    // validateAction
 };
-
-function logger(req, res, next) {
-    console.log(
-      `[${new Date().toISOString()}] to ${req.method} from ${req.originalUrl}`
-    );
-    next();
-  }
 
 async function validateId(req, res, next) {
     let id = req.params.id;
