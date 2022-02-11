@@ -37,7 +37,18 @@ router.post('/', validateAction, (req, res) => {
     })
 })
 
-
+router.put('/:id', validateActionId, validateAction, (req, res) => {
+    Actions.update(req.params.id, req.body)
+    .then(updateAction => {
+        res.status(200).json(updateAction);
+    })
+    .catch(err => {
+        res.status(500).json({
+            message: 'could not access actions',
+            err: err.message
+        })
+    })
+})
 
 
 module.exports = router;
