@@ -1,13 +1,13 @@
 // Write your "projects" router here!
-const express = require('express');
+const router = require('express').Router();
 const Projects = require('./projects-model');
 
-const router = express.Router();
+// const router = express.Router();
 
 const { validateId, validate } = require('./projects-middleware');
 
 
-router.get('/', async (req, res, next) => {
+router.get('/', (req, res, next) => {
     Projects.get()
     .then(list => {
         res.status(200).json(list)
