@@ -3,6 +3,8 @@ const router = require('express').Router();
 
 const Actions= require('./actions-model');
 
+const { validateActionId } = require('./actions-middlware');
+
 router.get('/', (req, res) => {
     Actions.get()
     .then(list => {
@@ -14,6 +16,12 @@ router.get('/', (req, res) => {
             err: err.message
         })
     })
+})
+
+router.get('/:id', validateActionId, async (req, res) => {
+    const {id} = req.params;
+    await Actions.get(id)
+    res.status(200).json(req.action)
 })
 
 

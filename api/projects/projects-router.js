@@ -16,7 +16,6 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/:id', validateId, async (req, res) => {
-    console.log('req', req.query)
     const { id } = req.params;
         await Projects.get(id)
     res.status(200).json(req.project)
