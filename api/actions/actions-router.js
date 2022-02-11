@@ -3,7 +3,7 @@ const router = require('express').Router();
 
 const Actions= require('./actions-model');
 
-const { validateActionId } = require('./actions-middlware');
+const { validateActionId, validateAction } = require('./actions-middlware');
 
 router.get('/', (req, res) => {
     Actions.get()
@@ -23,6 +23,21 @@ router.get('/:id', validateActionId, async (req, res) => {
     await Actions.get(id)
     res.status(200).json(req.action)
 })
+
+router.post('/', validateAction, (req, res) => {
+    Actions.insert(req.body)
+    .then(newAction => {
+        res.status(201).json(newAction)
+    })
+    .catch(err => {
+        res.status(500).json({
+            message: 'could not access actions',
+            err: err.message
+        })
+    })
+})
+
+
 
 
 module.exports = router;

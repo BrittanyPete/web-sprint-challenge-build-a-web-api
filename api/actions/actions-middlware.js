@@ -3,6 +3,7 @@ const Actions = require('./actions-model');
 
 module.exports = {
     validateActionId,
+    validateAction
 }
 
 async function validateActionId(req, res, next) {
@@ -14,6 +15,17 @@ async function validateActionId(req, res, next) {
         });
     } else {
         req.action = result;
+        next();
+    }
+}
+
+async function validateAction(req, res, next) {
+    const { project_id, description, notes, completed } = req.body;
+    if(!project_id || !description || !notes || completed === undefined) {
+        res.status(400).json({
+            message: 'all fields are required'
+        })
+    } else {
         next();
     }
 }
