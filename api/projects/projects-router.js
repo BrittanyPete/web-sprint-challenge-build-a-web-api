@@ -7,17 +7,12 @@ const router = express.Router();
 const { validateId, validate } = require('./projects-middleware');
 
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
     Projects.get()
     .then(list => {
         res.status(200).json(list)
     })
-    .catch(err => {
-        res.status(500).json({
-            message: 'could not get projects',
-            err: err.message
-        })
-    })
+    .catch(next)
 })
 
 router.get('/:id', validateId, async (req, res) => {
@@ -28,29 +23,35 @@ router.get('/:id', validateId, async (req, res) => {
 })
 
 
-router.post('/', validate, (req, res) => {
+router.post('/', validate, (req, res, next) => {
     Projects.insert(req.body)
     .then(newProj => {
         res.status(201).json(newProj)
     })
-    .catch(err => {
-        res.status(500).json({
-            message: 'could not add new project'
-        })
-    })
+    .catch(next)
 })
 
-router.put('/:id', validateId, validate, (req, res) => {
+router.put('/:id', validateId, validate, (req, res, next) => {
     const {id} = req.params;
     Projects.update(id, req.body)
     .then(updateProj => {
         res.status(200).json(updateProj);
     })
-    .catch(err => {
-        res.status(500).json({
-            message: 'could not edit project'
-        })
+    .catch(next)
+})
+
+router.delete('/:id', validateId, async (req, res, next) => {
+    Projects.remove(req.params.id)
+    .then(deleted => {
+        res.json(deleted)
     })
+    .catch(next)
+})
+
+router.get('/:id/actions', validateId, async (req, res, next) => {
+    await Projects.get(req.params.id)
+    const actions = await Projects.getProjectActions(req.params.id);
+    res.status(200).json(actions);
 })
 
 
