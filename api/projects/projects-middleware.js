@@ -4,7 +4,7 @@ const Projects = require('./projects-model');
 module.exports = {
     logger,
     validateId,
-    validateProj,
+    validate,
     // validateAction
 };
 
@@ -28,8 +28,10 @@ async function validateId(req, res, next) {
     }
 }
 
-async function validateProj(req, res, next) {
-    if (!req.body.name || !req.body.description) {
+
+async function validate (req, res, next) {
+    const { name , description, completed } = req.body;
+    if (!name || !description || completed === undefined ) {
         res.status(400).json({
             message: 'please enter all fields'
         })
