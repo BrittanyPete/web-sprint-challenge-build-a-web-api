@@ -147,7 +147,33 @@ We have provided test data for all the resources.
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
 1. The core features of Node.js and Express and why they are useful.
+
+Node.js uses the same JavaScript programming language for both the client and the server. It used to be that the browser was only able to read JavaScript, but Node.js allowed it to be used in other environments. It's single threaded, removing complexity. It allows the code to handle more client request easily. It is asynchronous, which allows other processes to run before the transmission is finished. Last, it gives us access to largest library of npm!
+
+Express is a light framework that we can use on Node.js to make it easier to create web apps and services. Some of the main features we get from Express are the ability to use middleware, routing, routers for application modularity, and convenience helpers. Middleware is useful because it can be written once, and triggered by multiple different actions. Routing allows us to break up our application into smaller parts and select which request handler function is executed based on the URL and the HTTP method used. We can break up our applications into different routers that have access to their own middleware and routing. Our convenience helpers allow us to have "out-of-the-box" functionality.
+
 1. Understand and explain the use of Middleware.
+
+Middleware are functions that extend our software and allow us to add features to Express. There are three different types of middleware: 
+1. Built-in middleware - these are middleware functions that are built in to Express and we can use when/if we need to. 
+2. 3rd party middleware - these are npm modules we can install then import into our applications. There are thousands of 3rd party middleware available to us.
+3. Custom middleware - these are functions we write ourselves to do specific tasks in our code.
+
 1. The basic principles of the REST architectural style.
+
+There are six basic principles of the REST architectural style:
+1. Client-server architecture - this helps enforce the separation of concerns. It allows both the client and the server components to evolve independently.
+2. Stateless architecture - each request coming from our client to the server must contain all of the necessary information to complete the request. It has to give all of the info without trying to store it or access it from state, as it cannot share state.
+3. Cacheable - caching allows a client application to reuse the response data later for similar requests.
+4. Layered System - this makes it so each component (client, or server) cannot see beyond the immediate layer they are interacting with. 
+5. Code on demand - this makes it so the client only needs to know how to execute the code. They are able to download the code and execute it from that download.
+6. Uniform Interfaces - We should be able to access each resource through a single URL (highly recommended). We can then manage or manipulate our resources through representations (the URL). Our resources should then have enough information to describe how to process the message using self-descriptive messages. The client should then have the initial URL and choose which interactions to take, which allows them to go to a different page if they choose. This is known as Hypermedia as the engine of application state.
+
+
 1. Understand and explain the use of Express Routers.
+
+Express routers are a way to break up your code into smaller, organized pieces, that can be composed together at a later time. It allows us to not have a huge single file where it's hard to find specific functions. We are able to break the code up into pieces that are specific to each other, for example, we can keep all of the middleware functions in a file together. We can route to that file when we need to access any of the functions saved in it.
+
 1. Describe tooling used to manually test the correctness of an API.
+
+There are tools such as Postman, HTTPie, and others that allow you to see what outputs your requests are giving. They help you to know what clients will see when they use your api and use certain requests. You can see immediately what you need to change, if it is giving you an output you weren't expecting.
